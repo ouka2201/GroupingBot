@@ -1,1 +1,1 @@
-worker: bundle exec ruby grouping_mash.rb
+worker: bundle exec ruby grouping.rb
