@@ -1,10 +1,8 @@
 require 'rubygems'
 require 'discordrb'
 require 'mechanize'
-require 'dotenv'
 
 # 環境変数のLoad
-Dotenv.load
 bot = Discordrb::Commands::CommandBot.new(
   token: ENV["DISCORD_TOKEN"] ,
   client_id: ENV["DISCORD_CLIENT_ID"],
@@ -12,7 +10,7 @@ bot = Discordrb::Commands::CommandBot.new(
 )
 
 bot.command :hello do |event|
- event.send_message("hallo,world.#{event.user.name}")
+ event.send_message("hallo,world! #{event.user.name}")
 end
 
 player_list = []
