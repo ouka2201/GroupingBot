@@ -10,7 +10,7 @@ bot = Discordrb::Commands::CommandBot.new(
 )
 
 bot.command :hello do |event|
- event.send_message("hallo,world! #{event.user.name}")
+    event.send_message("hallo,world! #{event.user.name}")
 end
 
 player_list = []
