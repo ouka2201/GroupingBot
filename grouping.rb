@@ -19,7 +19,7 @@ player_list = []
 bot.command :hi do |event|
     popuko_img_list = Dir.glob("img/*")
     select_img_path = popuko_img_list[rand(popuko_img_list.length)]
-    event.send_file(File.open(select_img_path, 'r'), caption: "#{event.user.name} .")
+    event.send_file(File.open(select_img_path, 'r'), caption: "#{event.user.name} !!!")
 end
 
 # Inamura
