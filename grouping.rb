@@ -43,26 +43,50 @@ end
 #参加者追加コマンド
 bot.command :add do |event, *code|
     #引数無しならユーザ名
-    player_name = (code[0] ? code[0] : event.user.name)
-    if player_list.include?(player_name)
-        event.send_message("#{player_name} は既に参加済み。")
-    else
-        player_list.push(player_name)
-        event.send_message("#{player_name} を追加しました。")
+    player_names = (code[0] ? code : [event.user.name])
+    added_names = []
+    canceled_names = []
+    player_names.each do |n|
+        if player_list.include?(n)
+            canceled_names << n
+        else
+            player_list << n
+            added_names << n
+        end
     end
+    messages = []
+    if !added_names.empty?
+        messages << "`#{added_names.join("`, `")}`を追加しました。"
+    end
+    if !canceled_names.empty?
+        messages << "`#{canceled_names.join("`, `")}`は既に参加済み。"
+    end
+    event.send_message(messages.join("\n"))
     puts player_list
 end
 
 #参加者削除コマンド
 bot.command [:remove, :rm] do |event, *code|
     #引数無しならユーザ名
-    player_name = (code[0] ? code[0] : event.user.name)
-    if player_list.include?(player_name)
-        player_list.delete(player_name)
-        event.send_message("#{player_name} をリストから削除しました。")
-    else
-        event.send_message("#{player_name} はおらんで。")
+    player_names = (code[0] ? code : [event.user.name])
+    removeed_names = []
+    canceled_names = []
+    player_names.each do |n|
+        if player_list.include?(n)
+            player_list.delete(n)
+            removeed_names << n
+        else
+            canceled_names << n
+        end
     end
+    messages = []
+    if !removeed_names.empty?
+        messages << "`#{removeed_names.join("`, `")}`をリストから削除しました。"
+    end
+    if !canceled_names.empty?
+        messages << "`#{canceled_names.join("`, `")}`はおらんで。"
+    end
+    event.send_message(messages.join("\n"))
     puts player_list
 end
 
@@ -72,7 +96,7 @@ bot.command [:list, :ls] do |event, *code|
     if player_list.empty?
         event.send_message("誰もリストにはおらんよ")
     else
-        event.send_message("#{player_list.join("\n")}")
+        event.send_message("```\n#{player_list.join("\n")}\n```")
     end
     puts player_list
 end
