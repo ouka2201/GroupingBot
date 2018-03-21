@@ -40,43 +40,45 @@ bot.command :food do |event|
     delete = File.delete("pic.png")
 end
 
-#プレイヤー追加コマンド
+#参加者追加コマンド
 bot.command :add do |event, *code|
-    player_name = code[0]
+    #引数無しならユーザ名
+    player_name = (code[0] ? code[0] : event.user.name)
     if player_list.include?(player_name)
-      event.send_message("#{code[0]} は既に参加済み。")
+        event.send_message("#{player_name} は既に参加済み。")
     else
-      player_list.push(player_name)
-      event.send_message("#{code[0]} を追加しました。")
+        player_list.push(player_name)
+        event.send_message("#{player_name} を追加しました。")
     end
     puts player_list
 end
 
-#プレイヤー追加コマンド
-bot.command :remove do |event, *code|
-    player_name = code[0]
+#参加者削除コマンド
+bot.command [:remove, :rm] do |event, *code|
+    #引数無しならユーザ名
+    player_name = (code[0] ? code[0] : event.user.name)
     if player_list.include?(player_name)
-      player_list.delete(player_name)
-      event.send_message("#{code[0]} をリストから削除しました。")
+        player_list.delete(player_name)
+        event.send_message("#{player_name} をリストから削除しました。")
     else
-      event.send_message("#{code[0]} はおらんで。")
+        event.send_message("#{player_name} はおらんで。")
     end
     puts player_list
 end
 
-#プレイヤー追加コマンド
-bot.command :list do |event, *code|
+#参加者リスト表示コマンド
+bot.command [:list, :ls] do |event, *code|
     player_name = code[0]
     if player_list.empty?
-      event.send_message("誰もリストにはおらんよ")
+        event.send_message("誰もリストにはおらんよ")
     else
-      event.send_message("#{player_list.join("\n")}")
+        event.send_message("#{player_list.join("\n")}")
     end
     puts player_list
 end
 
-# 参加者リスト初期化
-bot.command :clear do |event|
+#参加者リスト初期化
+bot.command [:clear, :removeall, :rmall] do |event|
     player_list.clear
     event.send_message("初期化完了。")
 end
