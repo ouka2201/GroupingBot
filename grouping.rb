@@ -84,27 +84,33 @@ bot.command [:clear, :removeall, :rmall] do |event|
 end
 
 #プレイヤーのチーム分け
-bot.command :grouping do |event|
+bot.command [:grouping, :group, :gp] do |event|
     blueteam_list   = []
     orangeteam_list = []
     if player_list.empty?
-     event.send_message("参加者は...誰一人居ませんでした...")
+        event.send_message("参加者は...誰一人居ませんでした...")
     else
-      choise_number_list = [*(0..(player_list.length - 1))].sort_by{rand}
-      choise_number_list.each_with_index do |x, i|
-        puts player_list[x]
-        if i.odd?
-          orangeteam_list.push(player_list[x])
-        else
-          blueteam_list.push(player_list[x])
+        choise_number_list = [*(0..(player_list.length - 1))].sort_by{rand}
+        choise_number_list.each_with_index do |x, i|
+            puts player_list[x]
+            if i.odd?
+                orangeteam_list.push(player_list[x])
+            else
+                blueteam_list.push(player_list[x])
+            end
         end
-      end
-      event.send_message("チーム分け完了")
-      event.send_message("【OrangeTeam】")
-      event.send_message("#{orangeteam_list.join("\n")}")
-      event.send_message("【BlueTeam】")
-      event.send_message("#{blueteam_list.join("\n")}")
-      event.send_message("Good Luck, Have Fun!")
+        event.send_message(<<"EOS"
+__**【BlueTeam】**__
+```
+#{blueteam_list.join("\n")}
+```
+__**【OrangeTeam】**__
+```
+#{orangeteam_list.join("\n")}
+```
+Good Luck, Have Fun!
+EOS
+        )
     end
 end
 
