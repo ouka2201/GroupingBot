@@ -4,9 +4,10 @@ require 'mechanize'
 
 # 環境変数のLoad
 bot = Discordrb::Commands::CommandBot.new(
-  token: ENV["DISCORD_TOKEN"] ,
-  client_id: ENV["DISCORD_CLIENT_ID"],
-  prefix:'/'
+    token: ENV["DISCORD_TOKEN"] ,
+    client_id: ENV["DISCORD_CLIENT_ID"],
+    prefix: ['/', '\\'],
+    command_doesnt_exist_message: 'そんなコマンドはないよ'
 )
 
 bot.command :hello do |event|
