@@ -41,7 +41,7 @@ bot.command :food do |event|
 end
 
 #参加者追加コマンド
-bot.command :add do |event, *code|
+bot.command [:add, :addme] do |event, *code|
     #引数無しならユーザ名
     player_names = (code[0] ? code : [event.user.name])
     added_names = []
@@ -66,7 +66,7 @@ bot.command :add do |event, *code|
 end
 
 #参加者削除コマンド
-bot.command [:remove, :rm] do |event, *code|
+bot.command [:remove, :rm, :removeme, :rmme] do |event, *code|
     #引数無しならユーザ名
     player_names = (code[0] ? code : [event.user.name])
     removeed_names = []
@@ -102,7 +102,7 @@ bot.command [:list, :ls] do |event, *code|
 end
 
 #参加者リスト初期化
-bot.command [:clear, :removeall, :rmall] do |event|
+bot.command [:clear, :clr, :removeall, :rmall] do |event|
     player_list.clear
     event.send_message("初期化完了。")
 end
