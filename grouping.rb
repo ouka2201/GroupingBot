@@ -23,13 +23,6 @@ bot.command :hi do |event|
     event.send_file(File.open(select_img_path, 'r'), caption: "#{event.user.name} !!!")
 end
 
-# Inamura
-# bot.command :inamura do |event|
-#     inamura_img_list = Dir.glob("inamura/*")
-#     select_img_path = inamura_img_list[rand(inamura_img_list.length)]
-#     event.send_file(File.open(select_img_path, 'r'), caption: "Hi, #{event.user.name} .")
-# end
-
 # Food写真提供
 bot.command :food do |event|
     agent = Mechanize.new
