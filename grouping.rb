@@ -65,6 +65,39 @@ bot.command [:add, :addme] do |event, *code|
     puts player_list
 end
 
+#発言者の居るボイスチャンネルのメンバーを全員参加者リストに追加
+bot.command :addall do |event, *code|
+    if event.user.voice_channel.nil?
+        event.send_message("発言者の居るボイスチャンネルのメンバーを追加するコマンドです。\nどこかのボイスチャンネルに入って使用してください。")
+    else
+        player_names = []
+        event.user.voice_channel.users.each do |u|
+            player_names << u.name
+        end
+        #ここからほとんどaddコマンドコピペ（どうにかしたい）
+        added_names = []
+        canceled_names = []
+        player_names.each do |n|
+            if player_list.include?(n)
+                canceled_names << n
+            else
+                player_list << n
+                added_names << n
+            end
+        end
+        messages = []
+        if !added_names.empty?
+            messages << "`#{added_names.join("`, `")}`を追加しました。"
+        end
+        if !canceled_names.empty?
+            messages << "`#{canceled_names.join("`, `")}`は既に参加済み。"
+        end
+        event.send_message(messages.join("\n"))
+        puts player_list
+        #コピペここまで
+    end
+end
+
 #参加者削除コマンド
 bot.command [:remove, :rm, :removeme, :rmme] do |event, *code|
     #引数無しならユーザ名
@@ -126,6 +159,43 @@ Good Luck, Have Fun!
 EOS
         )
     end
+end
+
+#一発で発言者の居るボイスチャンネルメンバー全員のチーム分け
+bot.command [:r6s, :r6] do |event|
+    #参加者リストを保持
+    tmp = player_list
+    #専用リストを作る
+    player_list = []
+    if event.user.voice_channel.nil?
+        event.send_message("発言者の居るボイスチャンネルのメンバーを参照するコマンドです。\nどこかのボイスチャンネルに入って使用してください。")
+    else
+        event.user.voice_channel.users.each do |u|
+            player_list << u.name
+        end
+        #ここからgroupingコマンドコピペ（どうにかしたい）
+        if player_list.length < 2
+            event.send_message("二人以上の参加者が必要です...")
+        else
+            team_list = player_list.sort_by{rand}.each_slice((player_list.length + 1) / 2).sort_by{rand}
+            event.send_message(<<"EOS"
+__**【BlueTeam】**__
+```
+#{team_list[0].join("\n")}
+```
+__**【OrangeTeam】**__
+```
+#{team_list[1].join("\n")}
+```
+Good Luck, Have Fun!
+EOS
+            )
+        end
+    end
+    #groupingコマンドコピペここまで
+    #参加者リストを戻す
+    player_list = tmp
+    return
 end
 
 # 鬼ごっこ
