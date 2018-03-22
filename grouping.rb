@@ -66,7 +66,7 @@ bot.command [:add, :addme] do |event, *code|
 end
 
 #発言者の居るボイスチャンネルのメンバーを全員参加者リストに追加
-bot.command :addall do |event, *code|
+bot.command :addall do |event|
     if event.user.voice_channel.nil?
         event.send_message("発言者の居るボイスチャンネルのメンバーを追加するコマンドです。\nどこかのボイスチャンネルに入って使用してください。")
     else
