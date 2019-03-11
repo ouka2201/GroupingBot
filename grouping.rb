@@ -202,7 +202,7 @@ bot.command :stage do |event, *code|
   event.send_message("```\nChoise #{choice_map}\n```")
   # 分岐
   if choice_list.include?(choice_map)
-    map_list = YAML.load_file("config/stage.yml")[choice_map]
+    map_list = YAML.load_file("config/stage.yml")["stage"][choice_map]
     event.send_message("```\n #{map_list.sample}\n```")
   else
     event.send_message("そのコマンドはないよ。")
