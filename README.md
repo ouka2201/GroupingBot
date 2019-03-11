@@ -8,7 +8,6 @@
 因みに、`gem install discordrb --platform=ruby`じゃなくても、`gem install discordrb`でもインストール出来ることは確認済み
 - [Discord Bot の 簡単な作り方](https://asamacs.wordpress.com/2016/06/22/discord-bot-の-簡単な作り方/)
 - [ruby入門者がdiscordのbotで遊んだ話](http://qiita.com/butaman551/items/7710113c0771cff05bbe)
-- [rubyで作ったdiscordbotをherokuにデプロイする話](http://qiita.com/butaman551/items/eba0a5da386194e4306c)
 
 ## 使い方
 まずは自分のコマンドプロンプトでgrouping.rbがあるディレクトリまで移動し、`grouping.rb`で起動させてください。
