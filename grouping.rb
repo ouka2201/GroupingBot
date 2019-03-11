@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'discordrb'
 require 'mechanize'
+require 'yaml'
 
 # 環境変数のLoad
 bot = Discordrb::Commands::CommandBot.new(
@@ -14,6 +15,7 @@ bot.command :hello do |event|
     event.send_message("hallo,world! #{event.user.name}")
 end
 
+# 変数
 player_list = []
 
 # ポプ子メッセージ
@@ -191,29 +193,19 @@ EOS
     return
 end
 
-# 鬼ごっこ
-bot.command :oni do |event, *code|
-  oni_number = code[0].to_i
-  puts oni_number
-  if oni_number.kind_of?(Integer)
-    break  if player_list.length < oni_number
-    choise_number_list = [*(0..(player_list.length - 1))].sort_by{rand}
-    sledge_number = choise_number_list[0]
-    if oni_number == 1
-      event.send_message("SLEDGE is #{player_list[sledge_number]}")
-    elsif oni_number == 2
-      twitch_number = choise_number_list[1]
-      event.send_message("SLEDGE is #{player_list[sledge_number]}")
-      event.send_message("TWITCH is #{player_list[twitch_number]}")
-    elsif oni_number == 3
-      twitch_number = choise_number_list[1]
-      blitz_number  = choise_number_list[2]
-      event.send_message("SLEDGE is #{player_list[sledge_number]}")
-      event.send_message("TWITCH is #{player_list[twitch_number]}")
-      event.send_message("BLITZ is #{player_list[blitz_number]}")
-    end
+# SelectStage
+bot.command :stage do |event, *code|
+  # 変数
+  choice_list = YAML.load_file("config/config.yml")["stage"]
+  choice_map  = code[0]
+  # 確認
+  event.send_message("```\nChoise #{choice_map}\n```")
+  # 分岐
+  if choice_list.include?(choice_map)
+    map_list = YAML.load_file("config/stage.yml")[choice_map]
+    event.send_message("```\n #{map_list.sample}\n```")
   else
-    event.send_message("数字をちゃんと入れてくだされ。")
+    event.send_message("そのコマンドはないよ。")
   end
 end
 

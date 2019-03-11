@@ -54,3 +54,6 @@ build-iPhoneSimulator/
 # 環境変数を除く
 .env
 
+## RemoveFile
+.idea
+.DS_Store
