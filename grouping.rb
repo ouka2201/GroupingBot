@@ -199,7 +199,7 @@ bot.command :stage do |event, *code|
   choice_list = YAML.load_file("config/config.yml")["stage"]
   choice_map  = code[0]
   # 確認
-  event.send_message("```\nChoise #{choice_map}\n```")
+  event.send_message("\nChoise #{choice_map}\n")
   # 分岐
   if choice_list.include?(choice_map)
     map_list = YAML.load_file("config/stage.yml")["stage"][choice_map]
