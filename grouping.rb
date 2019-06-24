@@ -156,6 +156,19 @@ EOS
     end
 end
 
+#Roulette
+bot.command [:roulette, :roule, :rlt] do |event|
+    if player_list.length < 1
+        event.send_message("1人以上をリストに入れてください...")
+    else
+        select_player = player_list.sample
+        event.send_message(<<"EOS"
+Player is #{select_player}
+EOS
+        )
+    end
+end
+
 #一発で発言者の居るボイスチャンネルメンバー全員のチーム分け
 bot.command [:r6s, :r6] do |event|
     #参加者リストを保持
