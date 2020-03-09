@@ -1,1 +1,1 @@
-worker: bundle exec ruby grouping.rb
+bot: bundle exec ruby grouping.rb
