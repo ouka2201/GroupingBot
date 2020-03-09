@@ -5,8 +5,8 @@ require 'yaml'
 
 # 環境変数のLoad
 bot = Discordrb::Commands::CommandBot.new(
-    token: ENV[Njg2MzczMzEzMTY0ODY5NjQy.XmWRUg.KYThFVaHxOG57SD1ExR2JmWEh_w] ,
-    client_id: ENV[686373313164869642],
+    token: 'Njg2MzczMzEzMTY0ODY5NjQy.XmWRUg.KYThFVaHxOG57SD1ExR2JmWEh_w' ,
+    client_id: '686373313164869642',
     prefix: ['/', '\\'],
     command_doesnt_exist_message: 'そんなコマンドはないよ'
 )
